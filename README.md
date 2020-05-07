@@ -11,7 +11,80 @@ Part of the [Overlook framework](https://overlookjs.github.io/).
 
 ## Usage
 
-This module is under development and not ready for use yet.
+Serve a static file for a route.
+
+### Standard usage
+
+Use this plugin on a route and set path of file to be served with `[STATIC_FILE_PATH]` or `[GET_STATIC_FILE_PATH]()` method.
+
+```js
+const Route = require('@overlook/route');
+const staticPlugin = require('@overlook/plugin-static');
+const StaticRoute = Route.extend( staticPlugin );
+const { STATIC_FILE_PATH } = staticPlugin;
+
+const route = new StaticRoute( {
+  [STATIC_FILE_PATH]: `${__dirname}/file.html`
+} );
+```
+
+or:
+
+```js
+const { GET_STATIC_FILE_PATH } = staticPlugin;
+
+class CustomRoute extends StaticRoute {
+  [GET_STATIC_FILE_PATH]() {
+    return `${__dirname}/file.html`;
+  }
+}
+
+const route = new CustomRoute();
+```
+
+The plugin extends the `.handle()` method to serve the specified file to requests for that route.
+
+`Content-Type` header will automatically be set with MIME type according to file extension.
+
+### Usage with match routes
+
+This plugin works with routes which use [@overlook/plugin-match](https://www.npmjs.com/package/@overlook/plugin-match) (and plugins which extend it like [@overlook/plugin-path](https://www.npmjs.com/package/@overlook/plugin-path)).
+
+If a Route has already been extended with [@overlook/plugin-match](https://www.npmjs.com/package/@overlook/plugin-match), this plugin will extend the `[HANDLE_ROUTE]()` method, rather than `.handle()`, to serve the specified file just for this specific route.
+
+NB [@overlook/plugin-match](https://www.npmjs.com/package/@overlook/plugin-match) must be applied *before* this plugin.
+
+### Headers
+
+Custom HTTP headers can be defined as an object `[STATIC_FILE_HEADERS]` or by defining a method `[GET_STATIC_FILE_HEADERS]()`.
+
+```js
+const { STATIC_FILE_PATH, STATIC_FILE_HEADERS } = staticPlugin;
+
+const route = new StaticRoute( {
+  [STATIC_FILE_PATH]: `${__dirname}/file.html`,
+  [STATIC_FILE_HEADERS]: {
+    'X-Foo': 'foobar'
+  }
+} );
+```
+
+```js
+const { GET_STATIC_FILE_PATH, GET_STATIC_FILE_HEADERS } = staticPlugin;
+
+class CustomRoute extends StaticRoute {
+  [GET_STATIC_FILE_PATH]() {
+    return `${__dirname}/file.html`;
+  }
+  [GET_STATIC_FILE_HEADERS]() {
+    return {
+      'X-Foo': 'foobar'
+    };
+  }
+}
+
+const route = new CustomRoute();
+```
 
 ## Versioning
 

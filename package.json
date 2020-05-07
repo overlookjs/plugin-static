@@ -16,11 +16,20 @@
   "bugs": {
     "url": "https://github.com/overlookjs/plugin-static/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@overlook/plugin": "^0.2.3",
+    "@overlook/plugin-match": "^0.7.1",
+    "@overlook/route": "^0.5.1",
+    "express": "^4.17.1",
+    "is-it-type": "^4.0.0",
+    "simple-invariant": "^1.0.0"
+  },
   "devDependencies": {
+    "@overlook/plugin-path": "^0.6.0",
     "@overlookmotel/eslint-config": "^7.1.2",
     "@overlookmotel/eslint-config-jest": "^4.0.1",
     "@overlookmotel/eslint-config-node": "^2.0.0",
+    "axios": "^0.19.2",
     "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
