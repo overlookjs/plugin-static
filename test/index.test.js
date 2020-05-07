@@ -11,10 +11,13 @@
 const pathJoin = require('path').join,
 	Route = require('@overlook/route'),
 	Plugin = require('@overlook/plugin'),
-	staticPlugin = require('@overlook/plugin-static'),
-	{STATIC_FILE_PATH, STATIC_FILE_HEADERS, GET_STATIC_FILE_PATH, GET_STATIC_FILE_HEADERS} = staticPlugin,
 	pathPlugin = require('@overlook/plugin-path'),
-	axios = require('axios');
+	axios = require('axios'),
+	staticPlugin = require('@overlook/plugin-static');
+
+const {
+	STATIC_FILE_PATH, STATIC_FILE_HEADERS, GET_STATIC_FILE_PATH, GET_STATIC_FILE_HEADERS
+} = staticPlugin;
 
 // Imports
 const {startServer, stopServer, URL} = require('./support/server.js');
