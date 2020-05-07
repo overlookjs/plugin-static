@@ -1,6 +1,6 @@
 {
   "name": "@overlook/plugin-static",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Overlook framework static file plugin",
   "main": "index.js",
   "files": [
