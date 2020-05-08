@@ -6,7 +6,9 @@
 'use strict';
 
 // Modules
-const {Server} = require('http');
+const {Server} = require('http'),
+	{PATH} = require('@overlook/plugin-request'),
+	{REQ, RES} = require('@overlook/plugin-serve-http');
 
 // Constants
 const PORT = 5000,
@@ -26,7 +28,12 @@ async function startServer(handle) {
 	server = new Server((req, res) => {
 		req.res = res;
 		res.req = req;
-		handle(req);
+
+		handle({
+			[REQ]: req,
+			[RES]: res,
+			[PATH]: req.url
+		});
 	});
 
 	await new Promise((resolve, reject) => {
