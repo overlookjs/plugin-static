@@ -23,7 +23,7 @@
     "@overlook/route": "^0.5.1",
     "express": "^4.17.1",
     "is-it-type": "^4.0.0",
-    "simple-invariant": "^1.0.0"
+    "simple-invariant": "^2.0.0"
   },
   "devDependencies": {
     "@overlook/plugin-path": "^0.8.0",
