@@ -17,10 +17,10 @@
     "url": "https://github.com/overlookjs/plugin-static/issues"
   },
   "dependencies": {
-    "@overlook/plugin": "^0.2.3",
-    "@overlook/plugin-match": "^0.7.1",
-    "@overlook/plugin-serve-http": "^0.3.0",
-    "@overlook/route": "^0.5.1",
+    "@overlook/plugin": "^0.2.6",
+    "@overlook/plugin-match": "^0.8.0",
+    "@overlook/plugin-serve-http": "^0.3.2",
+    "@overlook/route": "^0.6.2",
     "express": "^4.17.1",
     "is-it-type": "^4.0.0",
     "simple-invariant": "^2.0.0"

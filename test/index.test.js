@@ -68,17 +68,17 @@ describe('Functionality', () => { // eslint-disable-line jest/lowercase-name
 	});
 
 	describe('.init', () => {
-		it('defines [STATIC_FILE_PATH] based on [GET_STATIC_FILE_PATH]', () => {
+		it('defines [STATIC_FILE_PATH] based on [GET_STATIC_FILE_PATH]', async () => {
 			class CustomRoute extends StaticRoute {
 				[GET_STATIC_FILE_PATH]() { return '/abc'; }
 			}
 
 			const route = new CustomRoute();
-			route.init();
+			await route.init();
 			expect(route[STATIC_FILE_PATH]).toBe('/abc');
 		});
 
-		it('defines [STATIC_FILE_HEADERS] based on [GET_STATIC_FILE_HEADERS]', () => {
+		it('defines [STATIC_FILE_HEADERS] based on [GET_STATIC_FILE_HEADERS]', async () => {
 			const headers = {'X-Foo': 'abc'};
 			class CustomRoute extends StaticRoute {
 				[GET_STATIC_FILE_PATH]() { return '/abc'; }
@@ -86,7 +86,7 @@ describe('Functionality', () => { // eslint-disable-line jest/lowercase-name
 			}
 
 			const route = new CustomRoute();
-			route.init();
+			await route.init();
 			expect(route[STATIC_FILE_HEADERS]).toBe(headers);
 		});
 	});
@@ -104,7 +104,7 @@ describe('Functionality', () => { // eslint-disable-line jest/lowercase-name
 			let res;
 			beforeEach(async () => {
 				const route = new StaticRoute({[STATIC_FILE_PATH]: htmlFilePath});
-				route.init();
+				await route.init();
 				handle = req => route.handle(req);
 
 				res = await axios(URL);
@@ -136,7 +136,7 @@ describe('Functionality', () => { // eslint-disable-line jest/lowercase-name
 				}
 
 				const route = new CustomRoute();
-				route.init();
+				await route.init();
 				handle = req => route.handle(req);
 
 				res = await axios(URL);
@@ -167,7 +167,7 @@ describe('Functionality', () => { // eslint-disable-line jest/lowercase-name
 					[STATIC_FILE_PATH]: htmlFilePath,
 					[STATIC_FILE_HEADERS]: {'X-Foo': 'abc'}
 				});
-				route.init();
+				await route.init();
 				handle = req => route.handle(req);
 
 				res = await axios(URL);
@@ -192,7 +192,7 @@ describe('Functionality', () => { // eslint-disable-line jest/lowercase-name
 				}
 
 				const route = new CustomRoute();
-				route.init();
+				await route.init();
 				handle = req => route.handle(req);
 
 				res = await axios(URL);
@@ -214,11 +214,11 @@ describe('Functionality', () => { // eslint-disable-line jest/lowercase-name
 		const htmlFilePath = pathJoin(__dirname, './fixtures/page.html');
 		const htmlFilePath2 = pathJoin(__dirname, './fixtures/page2.html');
 
-		beforeEach(() => {
+		beforeEach(async () => {
 			const root = new StaticPathRoute({name: 'root', [STATIC_FILE_PATH]: htmlFilePath});
 			const child = new StaticPathRoute({name: 'child', [STATIC_FILE_PATH]: htmlFilePath2});
 			root.attachChild(child);
-			root.init();
+			await root.init();
 
 			startServer(req => root.handle(req));
 		});
