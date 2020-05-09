@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.2.1
+
+Features:
+
+* ESM export
+
+Refactor:
+
+* Rename var
+
+Dependencies:
+
+* Update plugin dependencies
+* Update `simple-invariant` dependency
+
+Dev:
+
+* Update dev dependencies
+
 ## 0.2.0
 
 Breaking changes:
