@@ -28,8 +28,8 @@
   },
   "dependencies": {
     "@overlook/plugin": "^0.3.0",
-    "@overlook/plugin-match": "^0.8.0",
-    "@overlook/plugin-serve-http": "^0.3.2",
+    "@overlook/plugin-match": "^0.8.2",
+    "@overlook/plugin-serve-http": "^0.3.3",
     "@overlook/route": "^0.6.3",
     "express": "^4.17.1",
     "is-it-type": "^4.0.0",
