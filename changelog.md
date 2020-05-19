@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.2
+
+Dependencies:
+
+* Update `@overlook/route` + `@overlook/plugin` dependencies
+* Update plugin dependencies
+
+Dev:
+
+* Update dev dependencies
+
 ## 0.2.1
 
 Features:
