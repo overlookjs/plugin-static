@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.3
+
+Minor:
+
+* Drop support for Node v13
+
+Dependencies:
+
+* Update dependencies
+
+Dev:
+
+* Update dev dependencies
+
 ## 0.2.2
 
 Dependencies:
