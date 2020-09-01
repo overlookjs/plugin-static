@@ -29,7 +29,7 @@ require('./support/index.js');
 
 const StaticRoute = Route.extend(staticPlugin);
 
-describe('Plugin', () => { // eslint-disable-line jest/lowercase-name
+describe('Plugin', () => {
 	it('is an instance of Plugin class', () => {
 		expect(staticPlugin).toBeInstanceOf(Plugin);
 	});
@@ -54,7 +54,7 @@ describe('Plugin', () => { // eslint-disable-line jest/lowercase-name
 	});
 });
 
-describe('Functionality', () => { // eslint-disable-line jest/lowercase-name
+describe('Functionality', () => {
 	describe('[INIT_PROPS]', () => {
 		it('defines [STATIC_FILE_PATH] as undefined', () => {
 			const route = new StaticRoute();
