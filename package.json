@@ -27,12 +27,12 @@
     "url": "https://github.com/overlookjs/plugin-static/issues"
   },
   "dependencies": {
-    "@overlook/plugin": "^0.3.0",
-    "@overlook/plugin-match": "^0.8.2",
-    "@overlook/plugin-serve-http": "^0.3.3",
-    "@overlook/route": "^0.6.3",
+    "@overlook/plugin": "^0.4.1",
+    "@overlook/plugin-match": "^0.8.3",
+    "@overlook/plugin-serve-http": "^0.3.4",
+    "@overlook/route": "^0.6.4",
     "express": "^4.17.1",
-    "is-it-type": "^4.0.0",
+    "is-it-type": "^5.0.0",
     "simple-invariant": "^2.0.0"
   },
   "devDependencies": {
