@@ -15,9 +15,7 @@ const pathJoin = require('path').join,
 	axios = require('axios'),
 	staticPlugin = require('@overlook/plugin-static');
 
-const {
-	STATIC_FILE_PATH, STATIC_FILE_HEADERS, GET_STATIC_FILE_PATH, GET_STATIC_FILE_HEADERS
-} = staticPlugin;
+const {STATIC_FILE, STATIC_FILE_HEADERS, GET_STATIC_FILE, GET_STATIC_FILE_HEADERS, File} = staticPlugin;
 
 // Imports
 const {startServer, stopServer, URL} = require('./support/server.js');
@@ -44,44 +42,50 @@ describe('Plugin', () => {
 
 	describe('exports symbols', () => {
 		it.each([
-			'STATIC_FILE_PATH',
-			'GET_STATIC_FILE_PATH',
+			'STATIC_FILE',
+			'GET_STATIC_FILE',
 			'STATIC_FILE_HEADERS',
 			'GET_STATIC_FILE_HEADERS'
 		])('%s', (key) => {
 			expect(typeof staticPlugin[key]).toBe('symbol');
 		});
 	});
+
+	it('exports File class', () => {
+		expect(staticPlugin.File).toBeFunction();
+	});
 });
 
 describe('Functionality', () => {
 	describe('[INIT_PROPS]', () => {
-		it('defines [STATIC_FILE_PATH] as undefined', () => {
+		it('defines [STATIC_FILE] as undefined', () => {
 			const route = new StaticRoute();
-			expect(route).toContainEntry([STATIC_FILE_PATH, undefined]);
+			expect(route).toContainEntry([STATIC_FILE, undefined]);
 		});
 
 		it('defines [STATIC_FILE_HEADERS] as undefined', () => {
 			const route = new StaticRoute();
-			expect(route).toContainEntry([STATIC_FILE_HEADERS, undefined]);
+			expect(route).toContainEntry([STATIC_FILE, undefined]);
 		});
 	});
 
 	describe('.init', () => {
-		it('defines [STATIC_FILE_PATH] based on [GET_STATIC_FILE_PATH]', async () => {
+		it('defines [STATIC_FILE] based on [GET_STATIC_FILE]', async () => {
 			class CustomRoute extends StaticRoute {
-				[GET_STATIC_FILE_PATH]() { return '/abc'; }
+				[GET_STATIC_FILE]() { return new File('/abc'); }
 			}
 
 			const route = new CustomRoute();
 			await route.init();
-			expect(route[STATIC_FILE_PATH]).toBe('/abc');
+			const file = route[STATIC_FILE];
+			expect(file).toBeInstanceOf(File);
+			expect(file.path).toBe('/abc');
 		});
 
 		it('defines [STATIC_FILE_HEADERS] based on [GET_STATIC_FILE_HEADERS]', async () => {
 			const headers = {'X-Foo': 'abc'};
 			class CustomRoute extends StaticRoute {
-				[GET_STATIC_FILE_PATH]() { return '/abc'; }
+				[GET_STATIC_FILE]() { return new File('/abc'); }
 				[GET_STATIC_FILE_HEADERS]() { return headers; }
 			}
 
@@ -100,10 +104,10 @@ describe('Functionality', () => {
 		});
 		afterEach(stopServer);
 
-		describe('file specified with [STATIC_FILE_PATH]', () => {
+		describe('file specified with [STATIC_FILE]', () => {
 			let res;
 			beforeEach(async () => {
-				const route = new StaticRoute({[STATIC_FILE_PATH]: htmlFilePath});
+				const route = new StaticRoute({[STATIC_FILE]: new File(htmlFilePath)});
 				await route.init();
 				handle = req => route.handle(req);
 
@@ -128,11 +132,11 @@ describe('Functionality', () => {
 			});
 		});
 
-		describe('file specified with [GET_STATIC_FILE_PATH]', () => {
+		describe('file specified with [GET_STATIC_FILE]', () => {
 			let res;
 			beforeEach(async () => {
 				class CustomRoute extends StaticRoute {
-					[GET_STATIC_FILE_PATH]() { return htmlFilePath; }
+					[GET_STATIC_FILE]() { return new File(htmlFilePath); }
 				}
 
 				const route = new CustomRoute();
@@ -164,7 +168,7 @@ describe('Functionality', () => {
 			let res;
 			beforeEach(async () => {
 				const route = new StaticRoute({
-					[STATIC_FILE_PATH]: htmlFilePath,
+					[STATIC_FILE]: new File(htmlFilePath),
 					[STATIC_FILE_HEADERS]: {'X-Foo': 'abc'}
 				});
 				await route.init();
@@ -187,7 +191,7 @@ describe('Functionality', () => {
 			let res;
 			beforeEach(async () => {
 				class CustomRoute extends StaticRoute {
-					[GET_STATIC_FILE_PATH]() { return htmlFilePath; }
+					[GET_STATIC_FILE]() { return new File(htmlFilePath); }
 					[GET_STATIC_FILE_HEADERS]() { return {'X-Foo': 'def'}; }
 				}
 
@@ -215,8 +219,8 @@ describe('Functionality', () => {
 		const htmlFilePath2 = pathJoin(__dirname, './fixtures/page2.html');
 
 		beforeEach(async () => {
-			const root = new StaticPathRoute({name: 'root', [STATIC_FILE_PATH]: htmlFilePath});
-			const child = new StaticPathRoute({name: 'child', [STATIC_FILE_PATH]: htmlFilePath2});
+			const root = new StaticPathRoute({name: 'root', [STATIC_FILE]: new File(htmlFilePath)});
+			const child = new StaticPathRoute({name: 'child', [STATIC_FILE]: new File(htmlFilePath2)});
 			root.attachChild(child);
 			await root.init();
 

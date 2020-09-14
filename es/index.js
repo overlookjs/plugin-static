@@ -10,8 +10,10 @@ import staticPlugin from '../lib/index.js';
 
 export default staticPlugin;
 export const {
-	STATIC_FILE_PATH,
-	GET_STATIC_FILE_PATH,
+	STATIC_FILE,
+	GET_STATIC_FILE,
 	STATIC_FILE_HEADERS,
-	GET_STATIC_FILE_HEADERS
+	GET_STATIC_FILE_HEADERS,
+	// From @overlook/plugin-fs
+	File
 } = staticPlugin;

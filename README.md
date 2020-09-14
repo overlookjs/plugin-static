@@ -15,27 +15,29 @@ Serve a static file for a route.
 
 ### Standard usage
 
-Use this plugin on a route and set path of file to be served with `[STATIC_FILE_PATH]` or `[GET_STATIC_FILE_PATH]()` method.
+Use this plugin on a route and set file to be served with `[STATIC_FILE]` or `[GET_STATIC_FILE]()` method.`
+
+The file should be provided as an instance of [@overlook/plugin-fs](https://www.npmjs.com/package/@overlook/plugin-fs)'s `File` class (re-exported as `File` property on this plugin).
 
 ```js
 const Route = require('@overlook/route');
 const staticPlugin = require('@overlook/plugin-static');
+const { STATIC_FILE, File } = staticPlugin;
 const StaticRoute = Route.extend( staticPlugin );
-const { STATIC_FILE_PATH } = staticPlugin;
 
 const route = new StaticRoute( {
-  [STATIC_FILE_PATH]: `${__dirname}/file.html`
+  [STATIC_FILE]: new File( `${__dirname}/file.html` )
 } );
 ```
 
 or:
 
 ```js
-const { GET_STATIC_FILE_PATH } = staticPlugin;
+const { GET_STATIC_FILE, File } = staticPlugin;
 
 class CustomRoute extends StaticRoute {
-  [GET_STATIC_FILE_PATH]() {
-    return `${__dirname}/file.html`;
+  [GET_STATIC_FILE]() {
+    return new File( `${__dirname}/file.html` );
   }
 }
 
@@ -59,10 +61,10 @@ NB [@overlook/plugin-match](https://www.npmjs.com/package/@overlook/plugin-match
 Custom HTTP headers can be defined as an object `[STATIC_FILE_HEADERS]` or by defining a method `[GET_STATIC_FILE_HEADERS]()`.
 
 ```js
-const { STATIC_FILE_PATH, STATIC_FILE_HEADERS } = staticPlugin;
+const { STATIC_FILE, STATIC_FILE_HEADERS, File } = staticPlugin;
 
 const route = new StaticRoute( {
-  [STATIC_FILE_PATH]: `${__dirname}/file.html`,
+  [STATIC_FILE]: new File( `${__dirname}/file.html` ),
   [STATIC_FILE_HEADERS]: {
     'X-Foo': 'foobar'
   }
@@ -70,11 +72,11 @@ const route = new StaticRoute( {
 ```
 
 ```js
-const { GET_STATIC_FILE_PATH, GET_STATIC_FILE_HEADERS } = staticPlugin;
+const { GET_STATIC_FILE, GET_STATIC_FILE_HEADERS, File } = staticPlugin;
 
 class CustomRoute extends StaticRoute {
-  [GET_STATIC_FILE_PATH]() {
-    return `${__dirname}/file.html`;
+  [GET_STATIC_FILE]() {
+    return new File( `${__dirname}/file.html` );
   }
   [GET_STATIC_FILE_HEADERS]() {
     return {
