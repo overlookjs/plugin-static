@@ -39,21 +39,6 @@ describe('Plugin', () => {
 			expect(Object.getPrototypeOf(StaticRoute.prototype)).toBe(Route.prototype);
 		});
 	});
-
-	describe('exports symbols', () => {
-		it.each([
-			'STATIC_FILE',
-			'GET_STATIC_FILE',
-			'STATIC_FILE_HEADERS',
-			'GET_STATIC_FILE_HEADERS'
-		])('%s', (key) => {
-			expect(typeof staticPlugin[key]).toBe('symbol');
-		});
-	});
-
-	it('exports File class', () => {
-		expect(staticPlugin.File).toBeFunction();
-	});
 });
 
 describe('Functionality', () => {
