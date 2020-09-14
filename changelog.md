@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0
+
+Breaking changes:
+
+* Use `File` objects not paths
+
+Tests:
+
+* Remove duplicate tests
+
+Dev:
+
+* Update dev dependencies
+
 ## 0.2.3
 
 Minor:
