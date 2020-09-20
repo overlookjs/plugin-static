@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.3.1
+
+Features:
+
+* Serve virtual files
+
+Improvements:
+
+* Improve type checking
+
+Bug fixes:
+
+* `.handle` return `undefined` if no file
+
+Dependencies:
+
+* Update `@overlook/plugin-fs` dependency
+
 ## 0.3.0
 
 Breaking changes:
