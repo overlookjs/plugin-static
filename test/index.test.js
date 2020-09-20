@@ -11,11 +11,15 @@
 const pathJoin = require('path').join,
 	Route = require('@overlook/route'),
 	Plugin = require('@overlook/plugin'),
+	fsPlugin = require('@overlook/plugin-fs'),
 	pathPlugin = require('@overlook/plugin-path'),
 	axios = require('axios'),
 	staticPlugin = require('@overlook/plugin-static');
 
-const {STATIC_FILE, STATIC_FILE_HEADERS, GET_STATIC_FILE, GET_STATIC_FILE_HEADERS, File} = staticPlugin;
+const {
+	STATIC_FILE, STATIC_FILE_HEADERS, GET_STATIC_FILE, GET_STATIC_FILE_HEADERS,
+	WRITE_FILE, File
+} = staticPlugin;
 
 // Imports
 const {startServer, stopServer, URL} = require('./support/server.js');
@@ -25,7 +29,8 @@ require('./support/index.js');
 
 // Tests
 
-const StaticRoute = Route.extend(staticPlugin);
+const StaticRoute = Route.extend(staticPlugin),
+	FsRoute = Route.extend(fsPlugin);
 
 describe('Plugin', () => {
 	it('is an instance of Plugin class', () => {
@@ -33,10 +38,16 @@ describe('Plugin', () => {
 	});
 
 	describe('when passed to `Route.extend()`', () => {
+		it('returns subclass of FsRoute', () => {
+			expect(StaticRoute).toBeFunction();
+			expect(Object.getPrototypeOf(StaticRoute)).toBe(FsRoute);
+			expect(Object.getPrototypeOf(StaticRoute.prototype)).toBe(FsRoute.prototype);
+		});
+
 		it('returns subclass of Route', () => {
 			expect(StaticRoute).toBeFunction();
-			expect(Object.getPrototypeOf(StaticRoute)).toBe(Route);
-			expect(Object.getPrototypeOf(StaticRoute.prototype)).toBe(Route.prototype);
+			expect(Object.getPrototypeOf(Object.getPrototypeOf(StaticRoute))).toBe(Route);
+			expect(Object.getPrototypeOf(Object.getPrototypeOf(StaticRoute.prototype))).toBe(Route.prototype);
 		});
 	});
 });
@@ -113,7 +124,7 @@ describe('Functionality', () => {
 			});
 
 			it('response has etag header', () => {
-				expect(res.headers.etag).toMatch(/^W\/"e-[0-9a-f]{11}"$/);
+				expect(res.headers.etag).toMatch(/^W\/"[0-9a-f]{1,2}-[0-9a-f]{11}"$/);
 			});
 		});
 
@@ -145,7 +156,37 @@ describe('Functionality', () => {
 			});
 
 			it('response has etag header', () => {
-				expect(res.headers.etag).toMatch(/^W\/"e-[0-9a-f]{11}"$/);
+				expect(res.headers.etag).toMatch(/^W\/"[0-9a-f]{1,2}-[0-9a-f]{11}"$/);
+			});
+		});
+
+		describe('virtual file', () => {
+			let res;
+			beforeEach(async () => {
+				const route = new StaticRoute();
+				await route.init();
+				const file = await route[WRITE_FILE]('html', '<h1>Virtual</h1>\n');
+				route[STATIC_FILE] = file;
+				handle = req => route.handle(req);
+
+				res = await axios(URL);
+			});
+
+			it('serves file', () => {
+				expect(res.status).toEqual(200);
+				expect(res.data).toEqual('<h1>Virtual</h1>\n');
+			});
+
+			it('response has correct content-length header', () => {
+				expect(res.headers['content-length']).toEqual('17');
+			});
+
+			it('response has correct content-type header', () => {
+				expect(res.headers['content-type']).toEqual('text/html; charset=UTF-8');
+			});
+
+			it('response has etag header', () => {
+				expect(res.headers.etag).toMatch(/^W\/"[0-9a-f]{1,2}-[0-9a-f]{11}"$/);
 			});
 		});
 

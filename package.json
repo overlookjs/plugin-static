@@ -34,7 +34,8 @@
     "@overlook/route": "^0.6.4",
     "express": "^4.17.1",
     "is-it-type": "^5.0.0",
-    "simple-invariant": "^2.0.0"
+    "simple-invariant": "^2.0.0",
+    "tmp-promise": "^3.0.2"
   },
   "devDependencies": {
     "@overlook/plugin-path": "^0.8.3",
