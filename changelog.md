@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.3.2
+
+Features:
+
+* Integration with `@overlook/plugin-build`
+
+Refactor:
+
+* Rename `invariant` to `assert`
+
+Dependencies:
+
+* Update `@overlook/route` + `@overlook/plugin-load` dependencies
+
+Docs:
+
+* Link to Travis CI with HTTPS
+* Remove Greenkeeper badge
+
+Dev:
+
+* Update dev dependencies
+
 ## 0.3.1
 
 Features:
