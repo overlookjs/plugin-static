@@ -1,5 +1,5 @@
 [![NPM version](https://img.shields.io/npm/v/@overlook/plugin-static.svg)](https://www.npmjs.com/package/@overlook/plugin-static)
-[![Build Status](https://img.shields.io/travis/overlookjs/plugin-static/master.svg)](http://travis-ci.org/overlookjs/plugin-static)
+[![Build Status](https://img.shields.io/travis/overlookjs/plugin-static/master.svg)](https://travis-ci.org/overlookjs/plugin-static)
 [![Dependency Status](https://img.shields.io/david/overlookjs/plugin-static.svg)](https://david-dm.org/overlookjs/plugin-static)
 [![Dev dependency Status](https://img.shields.io/david/dev/overlookjs/plugin-static.svg)](https://david-dm.org/overlookjs/plugin-static)
 [![Greenkeeper badge](https://badges.greenkeeper.io/overlookjs/plugin-static.svg)](https://greenkeeper.io/)
