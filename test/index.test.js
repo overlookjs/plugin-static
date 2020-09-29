@@ -95,9 +95,7 @@ describe('Functionality', () => {
 		const htmlFilePath = pathJoin(__dirname, './fixtures/page.html');
 
 		let handle;
-		beforeEach(() => {
-			startServer(req => handle(req));
-		});
+		beforeEach(() => startServer(req => handle(req)));
 		afterEach(stopServer);
 
 		describe('file specified with [STATIC_FILE]', () => {
